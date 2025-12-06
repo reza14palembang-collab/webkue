@@ -544,6 +544,15 @@
                         <div class="form-group">
                             <label>Gambar Kue</label>
                             <input type="file" id="productImage" accept="image/*">
+                            <script>
+  document.getElementById('productImage').addEventListener('change', async (e)=>{
+    const file = e.target.files[0];
+    if(!file || !file.type.startsWith('image/')) return;
+    const url = await uploadImage(file);
+    if(url){ window.tempProductImage = url; alert('Upload selesai. URL: '+url); }
+    else{ alert('Gagal upload gambar'); }
+  });
+</script>
                         </div>
                         <button type="submit" class="btn">Simpan Produk</button>
                         <button type="button" class="btn" onclick="hideAddProductForm()" style="background: #666; margin-left: 1rem;">Batal</button>
@@ -583,7 +592,7 @@
                         price: 250000,
                         category: "birthday",
                         description: "Kue cokelat klasik dengan lapisan cream dan cherry segar",
-                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23654321'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20'%3EBlack Forest%3C/text%3E%3C/svg%3E"
+                        image: window.tempProductImage || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23ccc'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20'%3E" + name + "%3C/text%3E%3C/svg%3E""
                     },
                     {
                         id: 2,
@@ -731,7 +740,7 @@
             const password = document.getElementById('adminPassword').value;
             
             // Password admin sederhana (bisa diganti)
-            if (password === 'admin123') {
+            if (password === '201020R') {
                 document.getElementById('admin-login').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
                 displayAdminProducts();
@@ -878,5 +887,22 @@
         initializeData();
         displayFeaturedProducts();
     </script>
+<!-- ===== Cloudinary Unsigned Upload ===== -->
+<script>
+  const CLOUD_NAME    = 'dgacmoky3';   // Cloud name-mu
+  const UPLOAD_PRESET = 'tokokue_unsigned'; // preset tadi
+
+  window.uploadImage = async function(file){
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', UPLOAD_PRESET);
+
+    const res = await fetch(url, {method:'POST', body: fd});
+    const data = await res.json();
+    return data.secure_url; // URL publik
+  };
+</script>
 </body>
+
 </html>
