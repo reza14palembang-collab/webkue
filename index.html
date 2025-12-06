@@ -162,10 +162,10 @@
 </div>
 
 <script>
-/* ===== DATA ===== */
+/* ---------- Data ---------- */
 let products = [], orders = [], selectedProduct = null, editingProduct = null;
 
-/* ===== CLOUDINARY (SUDAH DIISI) ===== */
+/* ---------- Cloudinary ---------- */
 const CLOUD_NAME    = 'dgacmoky3';
 const UPLOAD_PRESET = 'tokokue_unsigned';
 
@@ -183,7 +183,7 @@ window.uploadImage = async function(file){
   }
 };
 
-/* ===== INITIAL / LOCALSTORAGE ===== */
+/* ---------- Initial ---------- */
 function initializeData(){
   const savedProducts = localStorage.getItem('products');
   const savedOrders   = localStorage.getItem('orders');
@@ -207,7 +207,7 @@ function showSection(id){
   if(id==='home') displayFeaturedProducts();
 }
 
-/* ===== PRODUK ===== */
+/* ---------- Produk ---------- */
 function displayFeaturedProducts(){
   const container = document.getElementById('featured-products');
   container.innerHTML = products.slice(0,3).map(p=>`
@@ -243,7 +243,7 @@ function selectProduct(id){
   showSection('order');
 }
 
-/* ===== ORDER ===== */
+/* ---------- Order ---------- */
 document.getElementById('orderForm').addEventListener('submit', function(e){
   e.preventDefault();
   if(!selectedProduct){alert('Pilih kue terlebih dahulu'); return;}
@@ -267,7 +267,7 @@ document.getElementById('orderForm').addEventListener('submit', function(e){
   document.getElementById('selected-cake').textContent='Pilih kue terlebih dahulu';
 });
 
-/* ===== ADMIN ===== */
+/* ---------- Admin ---------- */
 document.getElementById('loginForm').addEventListener('submit', function(e){
   e.preventDefault();
   if(document.getElementById('adminPassword').value==='admin123'){
@@ -358,7 +358,16 @@ function updateOrderStatus(id,status){
   const o=orders.find(x=>x.id===id); if(o){o.status=status; saveOrders();}
 }
 
-/* ---------- Search ---------- */
+/* ---------- File input handler (auto upload) ---------- */
+document.getElementById('productImage').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file || !file.type.startsWith('image/')){ alert('Pilih file gambar!'); return; }
+  const url = await uploadImage(file);
+  if(url){ window.tempProductImage = url; alert('Upload selesai. URL: '+url); }
+  else{ alert('Gagal upload gambar'); }
+});
+
+/* ---------- Search / Filter ---------- */
 document.getElementById('searchInput').addEventListener('input',()=>displayProducts());
 document.getElementById('categoryFilter').addEventListener('change',()=>displayProducts());
 
