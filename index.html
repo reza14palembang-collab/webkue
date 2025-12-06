@@ -10,7 +10,7 @@
             --primary: #e91e63; --secondary: #f8bbd0; --accent: #ff80ab;
             --light: #fff0f5; --dark: #880e4f; --text: #5d4037;
             --glass: rgba(255,255,255,.85); --shadow: 0 8px 32px rgba(0,0,0,.1);
-            --radius: 20px; --trans: .4s;
+            --radius: 16px; --trans: .4s;
         }
         [data-theme="dark"] {
             --primary: #ff80ab; --secondary: #5d4037; --accent: #f48fb1;
@@ -18,123 +18,95 @@
             --glass: rgba(30,30,30,.85); --shadow: 0 8px 32px rgba(0,0,0,.4);
         }
         *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:Segoe UI,Roboto,Helvetica,Arial;font-size:1rem;color:var(--text);background:var(--light);min-height:100vh;transition:background var(--trans);}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:1rem;color:var(--text);background:var(--light);min-height:100vh;transition:background var(--trans);}
         nav{background:var(--glass);backdrop-filter:blur(10px);box-shadow:var(--shadow);position:sticky;top:0;z-index:1000;}
-        .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;}
-        .logo{font-size:1.8rem;font-weight:800;background:linear-gradient(45deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;}
-        .nav-menu{display:flex;list-style:none;gap:2rem;}
-        .nav-menu a{text-decoration:none;color:var(--text);font-weight:600;padding:.5rem 1rem;border-radius:30px;transition:.3s;}
+        .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:.75rem 1rem;}
+        .logo img{height:40px;}
+        .nav-menu{display:flex;list-style:none;gap:1rem;}
+        .nav-menu a{text-decoration:none;color:var(--text);font-weight:600;padding:.5rem .75rem;border-radius:30px;transition:.3s;font-size:.9rem;}
         .nav-menu a:hover{background:var(--secondary);color:var(--primary);}
-        .container{max-width:1200px;margin:0 auto;padding:2rem;}
-        .hero{text-align:center;padding:5rem 0;background:linear-gradient(135deg,var(--secondary) 0%,var(--light) 100%);border-radius:24px;margin-bottom:3rem;position:relative;overflow:hidden;}
-        .hero::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.4) 0%,transparent 70%);z-index:0;}
-        .hero h1{font-size:3.5rem;color:var(--dark);margin-bottom:1.5rem;position:relative;z-index:1;text-shadow:0 2px 4px rgba(0,0,0,.1);}
-        .hero p{font-size:1.3rem;color:var(--text);max-width:700px;margin:0 auto;position:relative;z-index:1;}
-        .btn{display:inline-block;padding:.9rem 2.2rem;background:linear-gradient(45deg,var(--primary),var(--accent));color:#fff;text-decoration:none;border-radius:30px;font-weight:700;border:none;cursor:pointer;font-size:1.1rem;box-shadow:0 4px 15px rgba(233,30,99,.3);transition:.3s;}
-        .btn:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(233,30,99,.4);}
-        .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2.5rem;margin-top:2rem;}
-        .product-card{background:var(--glass);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);transition:.4s;cursor:pointer;border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(5px);}
-        .product-card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 12px 30px rgba(0,0,0,.15);}
-        .product-image{width:100%;height:280px;object-fit:cover;transition:transform .5s;}
-        .product-card:hover .product-image{transform:scale(1.05);}
-        .product-info{padding:1.8rem;}
-        .product-name{font-size:1.4rem;font-weight:700;color:var(--dark);}
-        .product-price{font-size:1.3rem;color:var(--primary);font-weight:800;margin:.8rem 0;}
-        .product-description{color:#795548;font-size:1rem;line-height:1.6;}
-        .search-container{margin-bottom:2.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;}
-        .search-input{flex:1;padding:1rem 1.8rem;border:2px solid var(--secondary);border-radius:30px;font-size:1.1rem;background:var(--glass);backdrop-filter:blur(5px);}
-        .search-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(233,30,99,.2);}
-        .order-form{background:var(--glass);padding:2.5rem;border-radius:24px;box-shadow:var(--shadow);max-width:700px;margin:0 auto;backdrop-filter:blur(5px);}
-        .form-group{margin-bottom:1.8rem;}
-        .form-group label{display:block;margin-bottom:.7rem;font-weight:600;color:var(--dark);}
-        .form-group input,.form-group textarea,.form-group select{width:100%;padding:1rem 1.5rem;border:2px solid var(--secondary);border-radius:12px;font-size:1.1rem;background:rgba(255,255,255,.7);transition:border-color .3s;}
+        .container{max-width:1200px;margin:0 auto;padding:1rem;}
+        .hero{text-align:center;padding:3rem 1rem;background:linear-gradient(135deg,var(--secondary) 0%,var(--light) 100%);border-radius:var(--radius);margin-bottom:2rem;position:relative;overflow:hidden;}
+        .hero h1{font-size:2rem;color:var(--dark);margin-bottom:1rem;}
+        .hero p{font-size:1rem;color:var(--text);max-width:600px;margin:0 auto;}
+        .btn{display:inline-block;padding:.75rem 1.5rem;background:linear-gradient(45deg,var(--primary),var(--accent));color:#fff;text-decoration:none;border-radius:30px;font-weight:600;border:none;cursor:pointer;font-size:.95rem;box-shadow:0 4px 15px rgba(233,30,99,.3);transition:.3s;}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(233,30,99,.4);}
+        .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-top:1rem;}
+        .product-card{background:var(--glass);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.3s;cursor:pointer;border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(5px);}
+        .product-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 8px 20px rgba(0,0,0,.15);}
+        .product-image{width:100%;height:140px;object-fit:cover;}
+        .product-info{padding:.75rem;}
+        .product-name{font-size:.95rem;font-weight:700;color:var(--dark);line-height:1.2;}
+        .product-price{font-size:.9rem;color:var(--primary);font-weight:800;margin:.25rem 0;}
+        .product-description{font-size:.8rem;color:#795548;line-height:1.3;}
+        .search-container{margin-bottom:1.5rem;display:flex;gap:.5rem;flex-wrap:wrap;}
+        .search-input{flex:1;padding:.75rem 1rem;border:2px solid var(--secondary);border-radius:30px;font-size:.9rem;background:var(--glass);backdrop-filter:blur(5px);}
+        .search-input:focus{outline:none;border-color:var(--primary);}
+        .order-form{background:var(--glass);padding:1.5rem;border-radius:var(--radius);box-shadow:var(--shadow);max-width:700px;margin:0 auto;backdrop-filter:blur(5px);}
+        .form-group{margin-bottom:1.2rem;}
+        .form-group label{display:block;margin-bottom:.4rem;font-weight:600;color:var(--dark);font-size:.9rem;}
+        .form-group input,.form-group textarea,.form-group select{width:100%;padding:.75rem 1rem;border:2px solid var(--secondary);border-radius:12px;font-size:.9rem;background:rgba(255,255,255,.7);transition:border-color .3s;}
         .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--primary);}
-        .admin-login{background:var(--glass);padding:2.5rem;border-radius:24px;box-shadow:var(--shadow);max-width:500px;margin:2rem auto;text-align:center;backdrop-filter:blur(5px);}
-        .admin-panel{background:var(--glass);padding:2.5rem;border-radius:24px;box-shadow:var(--shadow);margin-top:2rem;backdrop-filter:blur(5px);}
-        .order-list{margin-top:1.5rem;}
-        .order-item{background:rgba(255,255,255,.7);padding:1.5rem;border-radius:16px;margin-bottom:1.2rem;box-shadow:0 4px 10px rgba(0,0,0,.05);border-left:4px solid var(--primary);}
-        @media(max-width:768px){.nav-container{flex-direction:column;gap:1rem}.hero h1{font-size:2.5rem}.product-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.8rem}}
+        .admin-login{background:var(--glass);padding:1.5rem;border-radius:var(--radius);box-shadow:var(--shadow);max-width:400px;margin:2rem auto;text-align:center;backdrop-filter:blur(5px);}
+        .admin-panel{background:var(--glass);padding:1.5rem;border-radius:var(--radius);box-shadow:var(--shadow);margin-top:1.5rem;backdrop-filter:blur(5px);}
+        .order-list{margin-top:1rem;}
+        .order-item{background:rgba(255,255,255,.7);padding:1rem;border-radius:12px;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:4px solid var(--primary);}
+        @media(max-width:600px){
+            .nav-container{flex-direction:column;gap:.5rem}
+            .hero{padding:2rem 1rem}
+            .hero h1{font-size:1.6rem}
+            .product-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem}
+            .container{padding:.75rem}
+        }
         .section{display:none}.section.active{display:block}
 
-        /* ===== DARK MODE TOGGLE ===== */
-        #themeToggle{position:fixed;bottom:2rem;right:2rem;width:3rem;height:3rem;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;box-shadow:var(--shadow);z-index:999;transition:.3s;}
+        /* ===== DARK MODE ===== */
+        #themeToggle{position:fixed;bottom:1.5rem;right:1.5rem;width:2.8rem;height:2.8rem;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;box-shadow:var(--shadow);z-index:999;font-size:1.2rem;transition:.3s;}
         #themeToggle:hover{transform:scale(1.1);}
 
-        /* ===== SLIDESHOW HERO ===== */
-        .slideshow{position:relative;width:100%;height:320px;border-radius:24px;overflow:hidden;margin-bottom:2rem;}
+        /* ===== SLIDESHOW HERO (ADMIN EDITABLE) ===== */
+        .slideshow{position:relative;width:100%;height:200px;border-radius:var(--radius);overflow:hidden;margin-bottom:1.5rem;}
         .slide{position:absolute;width:100%;height:100%;opacity:0;transition:opacity 1s;}
         .slide.active{opacity:1;}
         .slide img{width:100%;height:100%;object-fit:cover;}
-        .slide-text{position:absolute;bottom:2rem;left:2rem;background:rgba(0,0,0,.5);color:#fff;padding:1rem 1.5rem;border-radius:12px;}
-        .slide-text h3{font-size:1.5rem;margin-bottom:.5rem;}
-        .slide-text p{font-size:1rem;}
+        .slide-text{position:absolute;bottom:1rem;left:1rem;background:rgba(0,0,0,.5);color:#fff;padding:.5rem .8rem;border-radius:8px;font-size:.8rem;line-height:1.2;}
+        .slide-text h3{font-size:1rem;margin-bottom:.2rem;}
+        @media(max-width:600px){.slideshow{height:160px;}}
 
         /* ===== POPUP DETAIL / WISHLIST ===== */
-        .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:2000;}
-        .popup-content{background:var(--glass);border-radius:24px;padding:2rem;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;backdrop-filter:blur(10px);box-shadow:var(--shadow);}
+        .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:2000;padding:1rem;}
+        .popup-content{background:var(--glass);border-radius:var(--radius);padding:1.5rem;max-width:400px;width:100%;max-height:80vh;overflow-y:auto;backdrop-filter:blur(10px);box-shadow:var(--shadow);}
         .popup-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
         .popup-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--primary);}
-        .popup-body img{width:100%;border-radius:12px;margin-bottom:1rem;}
+        .popup-body img{width:100%;border-radius:var(--radius);margin-bottom:1rem;}
         .popup-body h3{margin-bottom:.5rem;}
-        .popup-body p{margin-bottom:1rem;}
+        .popup-body p{margin-bottom:1rem;font-size:.9rem;}
         .popup-actions{display:flex;gap:1rem;flex-wrap:wrap;}
-
-        /* ===== WISHLIST HEART ===== */
         .heart-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:#ccc;transition:color .3s;}
         .heart-btn.active{color:var(--primary);}
 
-        /* ===== RECOMMENDATION ===== */
-        .recommendation{margin-top:3rem;}
-        .recommendation h3{margin-bottom:1rem;text-align:center;}
+        /* ===== ADMIN EDIT LOGO & SLIDE HERO ===== */
+        .admin-edit-btn{background:#17a2b8;color:#fff;border:none;padding:.25rem .5rem;border-radius:4px;font-size:.7rem;cursor:pointer;margin-left:.5rem;}
+        #logoUpload,#slideUpload{display:none;}
 
-        /* ===== CUSTOM PREVIEW ===== */
-        .custom-preview{background:var(--glass);border-radius:16px;padding:1.5rem;margin-top:1rem;backdrop-filter:blur(5px);}
-        .color-picker{display:flex;gap:1rem;margin-bottom:1rem;}
-        .color-picker input{width:3rem;height:3rem;border:none;border-radius:50%;cursor:pointer;}
-        .preview-cake{width:120px;height:120px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#fff;text-align:center;}
+        /* ===== CHAT WA FLOATING ===== */
+        #waChat{position:fixed;bottom:5rem;right:1.5rem;background:#25D366;color:#fff;width:3rem;height:3rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);z-index:999;font-size:1.5rem;transition:.3s;}
+        #waChat:hover{transform:scale(1.1);}
 
-        /* ===== PRICE CALCULATOR ===== */
-        .price-calc{background:var(--glass);border-radius:16px;padding:1.5rem;margin-top:1rem;backdrop-filter:blur(5px);}
-        .price-calc h4{margin-bottom:1rem;}
-        .calc-row{display:flex;justify-content:space-between;margin-bottom:.5rem;}
-        .calc-total{font-weight:bold;font-size:1.2rem;color:var(--primary);}
-
-        /* ===== NOTIF ADMIN ===== */
-        #adminNotif{position:fixed;top:1rem;right:1rem;background:var(--primary);color:#fff;padding:1rem 1.5rem;border-radius:12px;box-shadow:var(--shadow);display:none;z-index:3000;animation:notifPop .5s;}
-        @keyframes notifPop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
-
-        /* ===== TESTIMONI ===== */
-        .testimoni-section{margin-top:3rem;}
-        .testimoni-card{background:var(--glass);padding:1.5rem;border-radius:16px;margin-bottom:1rem;backdrop-filter:blur(5px);}
-        .stars{color:gold;}
-        .testi-text{margin-top:.5rem;font-style:italic;}
-
-        /* ===== OFFLINE MODE ===== */
-        .offline-banner{background:#ff9800;color:#fff;text-align:center;padding:.5rem;position:fixed;top:0;left:0;width:100%;z-index:4000;display:none;}
-
-        /* ===== BUNDLING ===== */
-        .bundle-card{background:var(--glass);border-radius:16px;padding:1.5rem;margin-bottom:1rem;backdrop-filter:blur(5px);}
-        .bundle-save{color:var(--primary);font-weight:bold;}
-
-        /* ===== COMPARE ===== */
-        .compare-container{display:flex;gap:1rem;flex-wrap:wrap;}
-        .compare-card{background:var(--glass);border-radius:16px;padding:1rem;width:45%;min-width:250px;backdrop-filter:blur(5px);}
-        .compare-card img{width:100%;border-radius:12px;margin-bottom:1rem;}
-
-        /* ===== SALAM & UKURAN POPUP ===== */
-        .salam-box{background:var(--glass);border-radius:16px;padding:1rem;margin-bottom:1rem;backdrop-filter:blur(5px);}
-        .size-popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:2500;}
-        .size-popup{background:var(--glass);border-radius:24px;padding:2rem;max-width:400px;width:90%;backdrop-filter:blur(10px);box-shadow:var(--shadow);}
-        .size-option{display:block;width:100%;margin:.5rem 0;padding:1rem;border:2px solid var(--secondary);border-radius:12px;background:transparent;cursor:pointer;transition:.3s;}
-        .size-option:hover{border-color:var(--primary);}
-        .size-price{font-weight:bold;color:var(--primary);}
+        /* ===== OFFLINE BANNER ===== */
+        .offline-banner{background:#ff9800;color:#fff;text-align:center;padding:.5rem;position:fixed;top:0;left:0;width:100%;z-index:4000;display:none;font-size:.8rem;}
     </style>
 </head>
 <body>
 
 <nav>
     <div class="nav-container">
-        <div class="logo">🧁 Sweet Delights</div>
+        <!-- LOGO BISA DI-EDIT ADMIN -->
+        <div class="logo">
+            <img id="logoImg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Crect width='120' height='40' fill='%23e91e63' rx='8'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3ESweet Delights%3C/text%3E%3C/svg%3E" alt="Logo">
+            <input type="file" id="logoUpload" accept="image/*" onchange="changeLogo()">
+            <button class="admin-edit-btn" onclick="document.getElementById('logoUpload').click()" style="display:none;">Edit</button>
+        </div>
         <ul class="nav-menu">
             <li><a href="#home"   onclick="showSection('home');   return false;">Home</a></li>
             <li><a href="#products" onclick="showSection('products'); return false;">Daftar Kue</a></li>
@@ -148,26 +120,30 @@
 
 <div id="home" class="section active">
     <div class="container">
+        <!-- SLIDESHOW HERO BISA DI-EDIT ADMIN -->
         <div class="slideshow" id="heroSlideshow"></div>
+        <input type="file" id="slideUpload" accept="image/*" multiple onchange="changeSlides()" style="display:none;">
+        <button class="admin-edit-btn" onclick="document.getElementById('slideUpload').click()" style="display:none;margin:0 auto 1rem;display:block;">Edit Slide Hero</button>
+
         <div class="hero fade-in">
             <h1>Selamat Datang di Sweet Delights</h1>
             <p>Nikmati kelezatan kue homemade dengan bahan berkualitas terbaik. Pesan sekarang dan rasakan kebahagiaan dalam setiap gigitan!</p>
             <br><a href="#products" onclick="showSection('products'); return false;" class="btn">Lihat Daftar Kue</a>
         </div>
-        <h2 style="text-align:center;margin-bottom:2rem;color:var(--dark)">Kue Terlaris Kami</h2>
+        <h2 style="text-align:center;margin-bottom:1rem;color:var(--dark)">Kue Terlaris Kami</h2>
         <div id="featured-products" class="product-grid"></div>
     </div>
 </div>
 
 <div id="products" class="section">
     <div class="container">
-        <h1 style="text-align:center;margin-bottom:2rem;color:var(--dark)">Daftar Kue</h1>
+        <h1 style="text-align:center;margin-bottom:1rem;color:var(--dark)">Daftar Kue</h1>
         <div class="search-container">
             <input type="text" class="search-input" id="searchInput" placeholder="Cari kue...">
-            <select class="search-input" id="categoryFilter" style="width:200px">
-                <option value="">Semua Kategori</option>
-                <option value="birthday">Kue Ulang Tahun</option>
-                <option value="wedding">Kue Pernikahan</option>
+            <select class="search-input" id="categoryFilter" style="width:140px">
+                <option value="">Semua</option>
+                <option value="birthday">Ulang Tahun</option>
+                <option value="wedding">Pernikahan</option>
                 <option value="pastry">Pastry</option>
             </select>
         </div>
@@ -178,9 +154,9 @@
 
 <div id="order" class="section">
     <div class="container">
-        <h1 style="text-align:center;margin-bottom:2rem;color:var(--dark)">Pemesanan Kue</h1>
+        <h1 style="text-align:center;margin-bottom:1rem;color:var(--dark)">Pemesanan Kue</h1>
         <div class="order-form fade-in">
-            <h2 id="selected-cake" style="margin-bottom:1.5rem;color:var(--primary)">Pilih kue terlebih dahulu</h2>
+            <h2 id="selected-cake" style="margin-bottom:1rem;color:var(--primary)">Pilih kue terlebih dahulu</h2>
             <form id="orderForm">
                 <div class="form-group"><label>Nama Lengkap</label><input type="text" id="customerName" required></div>
                 <div class="form-group"><label>Nomor WhatsApp</label><input type="tel" id="customerPhone" required></div>
@@ -246,15 +222,16 @@
         </div>
         <div id="admin-panel" class="admin-panel" style="display:none">
             <h2>Dashboard Admin</h2>
-            <div style="margin:2rem 0">
+            <div style="margin:1.5rem 0">
                 <button class="btn" onclick="showAddProductForm()">Tambah Produk Baru</button>
                 <button class="btn" onclick="showOrders()" style="margin-left:1rem">Lihat Pesanan</button>
+                <button class="btn" onclick="showTestimoni()" style="margin-left:1rem;">Lihat Testimoni</button>
             </div>
             <div id="product-management">
                 <h3>Kelola Produk</h3>
                 <div id="admin-product-list" class="product-grid"></div>
             </div>
-            <div id="add-product-form" style="display:none;margin-top:2rem">
+            <div id="add-product-form" style="display:none;margin-top:1.5rem">
                 <h3>Tambah / Edit Produk</h3>
                 <form id="productForm">
                     <div class="form-group"><label>Nama Kue</label><input type="text" id="productName" required></div>
@@ -272,9 +249,14 @@
                     <button type="button" class="btn" onclick="hideAddProductForm()" style="background:#666;margin-left:1rem">Batal</button>
                 </form>
             </div>
-            <div id="orders-list" style="display:none;margin-top:2rem">
+            <div id="orders-list" style="display:none;margin-top:1.5rem">
                 <h3>Daftar Pesanan</h3>
                 <div id="order-list-container" class="order-list"></div>
+            </div>
+            <div id="testimoni-section" style="display:none;margin-top:1.5rem;">
+                <h3>Testimoni Pelanggan</h3>
+                <button class="btn" onclick="addTestimoni()" style="margin-bottom:1rem;">Tulis Testimoni</button>
+                <div id="testimoniList"></div>
             </div>
         </div>
     </div>
@@ -299,15 +281,6 @@
     </div>
 </div>
 
-<!-- Pop-up pemilihan ukuran -->
-<div class="size-popup-overlay" id="sizePopupOverlay">
-    <div class="size-popup">
-        <h3>Pilih Ukuran & Harga</h3>
-        <div id="sizeOptions"></div>
-        <button class="btn" onclick="closeSizePopup()" style="margin-top:1rem;width:100%">Batal</button>
-    </div>
-</div>
-
 <!-- Notifikasi admin -->
 <div id="adminNotif">Pesanan Baru! 🎉</div>
 
@@ -315,7 +288,7 @@
 <div class="offline-banner" id="offlineBanner">Anda offline – beberapa fitur terbatas.</div>
 
 <!-- Chat WhatsApp floating -->
-<a href="https://wa.me/6281234567890?text=Halo%20Sweet%20Delights!" id="waChat" target="_blank" title="Chat Admin" style="position:fixed;bottom:5.5rem;right:2rem;background:#25D366;color:#fff;width:3.5rem;height:3.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);z-index:999;font-size:1.5rem;transition:.3s;">💬</a>
+<a href="https://wa.me/6281234567890?text=Halo%20Sweet%20Delights!" id="waChat" target="_blank" title="Chat Admin" style="position:fixed;bottom:5rem;right:1.5rem;background:#25D366;color:#fff;width:3rem;height:3rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);z-index:999;font-size:1.5rem;transition:.3s;">💬</a>
 
 <script>
 /* ---------- Data ---------- */
@@ -370,7 +343,7 @@ function showSection(id){
   document.getElementById(id).classList.add('active');
   if(id==='products') {displayProducts(); displayRecommendation();}
   if(id==='home') {displayFeaturedProducts(); initSlideshow();}
-  if(id==='admin') displayAdminProducts();
+  if(id==='admin') {displayAdminProducts(); showAdminControls();}
 }
 
 /* ---------- DARK MODE ---------- */
@@ -381,15 +354,49 @@ function toggleDark(){
   document.getElementById('themeToggle').textContent = current==='dark'?'🌙':'☀️';
 }
 
-/* ---------- SLIDESHOW ---------- */
-const slideshowData = [
-  {img:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="320"%3E%3Crect width="800" height="320" fill="%23e91e63"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="40"%3EPromo Spesial 🎉%3C/text%3E%3C/svg%3E',title:'Promo Spesial',desc:'Diskon 20 % hari ini!'},
-  {img:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="320"%3E%3Crect width="800" height="320" fill="%23f8bbd0"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23880e4f" font-size="40"%3EKue Ulang Tahun%3C/text%3E%3C/svg%3E',title:'Kue Ulang Tahun',desc:'Pesan sekarang, gratis topper!'},
-  {img:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="320"%3E%3Crect width="800" height="320" fill="%235d4037"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="40"%3EPastry Premium%3C/text%3E%3C/svg%3E',title:'Pastry Premium',desc:'Rasa authentic, hanya di sini!'}
-];
+/* ---------- ADMIN EDIT LOGO & SLIDE HERO ---------- */
+function showAdminControls(){
+  document.querySelectorAll('.admin-edit-btn').forEach(btn=>btn.style.display='inline-block');
+}
+function changeLogo(){
+  const file = document.getElementById('logoUpload').files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('logoImg').src = e.target.result;
+    localStorage.setItem('customLogo', e.target.result);
+    alert('Logo berhasil diubah!');
+  };
+  reader.readAsDataURL(file);
+}
+function changeSlides(){
+  const files = document.getElementById('slideUpload').files;
+  if(!files.length) return;
+  const newSlides = [];
+  Array.from(files).forEach(file=>{
+    const reader = new FileReader();
+    reader.onload = e => {
+      newSlides.push(e.target.result);
+      if(newSlides.length===files.length){
+        localStorage.setItem('customSlides', JSON.stringify(newSlides));
+        initSlideshow();
+        alert('Slide hero berhasil diubah!');
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ---------- SLIDESHOW (CUSTOMIZABLE) ---------- */
 function initSlideshow(){
+  const custom = JSON.parse(localStorage.getItem('customSlides')||'[]');
+  const data = custom.length ? custom.map((img,i)=>({img,title:'Slide '+(i+1),desc:''})) : [
+    {img:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="200"%3E%3Crect width="800" height="200" fill="%23e91e63"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="30"%3EPromo Spesial 🎉%3C/text%3E%3C/svg%3E',title:'Promo Spesial',desc:'Diskon 20 % hari ini!'},
+    {img:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="200"%3E%3Crect width="800" height="200" fill="%23f8bbd0"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23880e4f" font-size="30"%3EKue Ulang Tahun%3C/text%3E%3C/svg%3E',title:'Kue Ulang Tahun',desc:'Pesan sekarang, gratis topper!'},
+    {img:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="200"%3E%3Crect width="800" height="200" fill="%235d4037"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="30"%3EPastry Premium%3C/text%3E%3C/svg%3E',title:'Pastry Premium',desc:'Rasa authentic, hanya di sini!'}
+  ];
   const container = document.getElementById('heroSlideshow');
-  container.innerHTML = slideshowData.map((s,i)=>`
+  container.innerHTML = data.map((s,i)=>`
     <div class="slide ${i===0?'active':''}">
       <img src="${s.img}" alt="">
       <div class="slide-text">
@@ -409,7 +416,7 @@ function initSlideshow(){
 /* ---------- Produk ---------- */
 function displayFeaturedProducts(){
   const container = document.getElementById('featured-products');
-  container.innerHTML = products.slice(0,3).map(p=>cardHTML(p)).join('');
+  container.innerHTML = products.slice(0,3).map(cardHTML).join('');
 }
 function displayProducts(){
   const container = document.getElementById('product-list');
@@ -418,20 +425,20 @@ function displayProducts(){
   let filtered = products;
   if(searchTerm) filtered = filtered.filter(p=> p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm));
   if(cat) filtered = filtered.filter(p=>p.category===cat);
-  container.innerHTML = filtered.map(p=>cardHTML(p)).join('');
+  container.innerHTML = filtered.map(cardHTML).join('');
 }
 function cardHTML(p){
   const isLow = p.stock <= 2;
   return `
-    <div class="product-card fade-in">
-      <img src="${p.image}" alt="${p.name}" class="product-image" onclick="showDetail(${p.id})">
+    <div class="product-card fade-in" onclick="showDetail(${p.id})">
+      <img src="${p.image}" alt="${p.name}" class="product-image">
       <div class="product-info">
-        <h3 class="product-name">${p.name} ${isLow?'<span style="color:red;font-size:.8rem;">Hampir habis!</span>':''}</h3>
+        <h3 class="product-name">${p.name} ${isLow?'<span style="color:red;font-size:.7rem;">Hampir habis!</span>':''}</h3>
         <p class="product-price">Rp ${p.price.toLocaleString()}</p>
         <p class="product-description">${p.description}</p>
-        <div style="display:flex;gap:.5rem;margin-top:1rem;">
-          <button class="btn" onclick="selectProduct(${p.id})">Pesan</button>
-          <button class="heart-btn ${wishlist.includes(p.id)?'active':''}" onclick="toggleWishlist(${p.id})">❤️</button>
+        <div style="display:flex;gap:.5rem;margin-top:.5rem;">
+          <button class="btn" style="font-size:.75rem;padding:.4rem .8rem;" onclick="event.stopPropagation(); selectProduct(${p.id})">Pesan</button>
+          <button class="heart-btn ${wishlist.includes(p.id)?'active':''}" onclick="event.stopPropagation(); toggleWishlist(${p.id})">❤️</button>
         </div>
       </div>
     </div>`;
@@ -441,13 +448,14 @@ function cardHTML(p){
 function showDetail(id){
   const p = products.find(x=>x.id===id);
   if(!p) return;
+  selectedProduct = p;
   document.getElementById('popupTitle').textContent = p.name;
   document.getElementById('popupImg').src = p.image;
   document.getElementById('popupDesc').textContent = p.description;
   document.getElementById('popupExtra').innerHTML = `
     <p><strong>Rating:</strong> ${'★'.repeat(Math.floor(p.rating))} (${p.rating})</p>
     <p><strong>Stok:</strong> ${p.stock} pcs</p>
-    ${p.extraImages.length?'<p><strong>Foto lain:</strong></p><div style="display:flex;gap:.5rem;">'+p.extraImages.map(im=>`<img src="${im}" style="width:80px;height:60px;object-fit:cover;border-radius:8px;">`).join('')+'</div>':''}
+    ${p.extraImages.length?'<p><strong>Foto lain:</strong></p><div style="display:flex;gap:.5rem;">'+p.extraImages.map(im=>`<img src="${im}" style="width:60px;height:45px;object-fit:cover;border-radius:6px;">`).join('')+'</div>':''}
   `;
   document.getElementById('popupOverlay').style.display='flex';
 }
@@ -567,9 +575,9 @@ function displayAdminProducts(){
         <p class="product-price">Rp ${p.price.toLocaleString()}</p>
         <p class="product-description">${p.description}</p>
         <p><small>Stok: ${p.stock} | Rating: ${p.rating}</small></p>
-        <div style="margin-top:1rem;">
-          <button class="btn" onclick="editProduct(${p.id})">Edit</button>
-          <button class="btn" onclick="deleteProduct(${p.id})" style="background:#dc3545;margin-left:.5rem;">Hapus</button>
+        <div style="margin-top:.5rem;">
+          <button class="btn" style="font-size:.7rem;padding:.4rem .6rem;" onclick="editProduct(${p.id})">Edit</button>
+          <button class="btn" onclick="deleteProduct(${p.id})" style="background:#dc3545;margin-left:.5rem;font-size:.7rem;padding:.4rem .6rem;">Hapus</button>
         </div>
       </div>
     </div>`).join('');
@@ -577,6 +585,7 @@ function displayAdminProducts(){
 function showAddProductForm(){
   document.getElementById('add-product-form').style.display='block';
   document.getElementById('orders-list').style.display='none';
+  document.getElementById('testimoni-section').style.display='none';
   document.getElementById('productForm').reset();
   editingProduct=null;
 }
@@ -630,10 +639,7 @@ function notifyAdmin(){
   const notif = document.getElementById('adminNotif');
   notif.style.display='block';
   setTimeout(()=>notif.style.display='none', 4000);
-  // getar & suara
   if(navigator.vibrate) navigator.vibrate([200,100,200]);
-  const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDqR4FQpHV8teyQBEHObHh6MOoGAg+lNbz17JAFAeWs+Ho17A...');
-  audio.play().catch(()=>{});
 }
 
 /* ---------- Testimoni ---------- */
@@ -644,7 +650,7 @@ function showTestimoni(){
     <div class="testimoni-card">
       <div class="stars">${'★'.repeat(Math.floor(t.stars))}</div>
       <div class="testi-text">“${t.text}”</div>
-      <div style="text-align:right;font-size:.9rem;">- ${t.name}</div>
+      <div style="text-align:right;font-size:.8rem;">- ${t.name}</div>
     </div>`).join('');
 }
 function addTestimoni(){
@@ -667,8 +673,14 @@ window.addEventListener('offline',()=>{offlineMode=true; document.getElementById
 document.getElementById('searchInput').addEventListener('input',()=>displayProducts());
 document.getElementById('categoryFilter').addEventListener('change',()=>displayProducts());
 
-/* ---------- Hash router ---------- */
-if(location.hash==='#products') showSection('products');
+/* ---------- Update JSON publik ---------- */
+function updatePublicJSON(){
+  const blob = new Blob([JSON.stringify(products, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'products.json';
+  a.click();
+}
 
 /* ---------- Init ---------- */
 initializeData();
