@@ -56,10 +56,10 @@
     <div class="nav-container">
         <div class="logo">🧁 Sweet Delights</div>
         <ul class="nav-menu">
-            <li><a href="#" onclick="showSection('home')">Home</a></li>
-            <li><a href="#" onclick="showSection('products')">Daftar Kue</a></li>
-            <li><a href="#" onclick="showSection('order')">Pesan</a></li>
-            <li><a href="#" onclick="showSection('admin')">Admin</a></li>
+            <li><a href="#home"   onclick="showSection('home');   return false;">Home</a></li>
+            <li><a href="#products" onclick="showSection('products'); return false;">Daftar Kue</a></li>
+            <li><a href="#order"   onclick="showSection('order');   return false;">Pesan</a></li>
+            <li><a href="#admin"   onclick="showSection('admin');   return false;">Admin</a></li>
         </ul>
     </div>
 </nav>
@@ -69,7 +69,7 @@
         <div class="hero fade-in">
             <h1>Selamat Datang di Sweet Delights</h1>
             <p>Nikmati kelezatan kue homemade dengan bahan berkualitas terbaik. Pesan sekarang dan rasakan kebahagiaan dalam setiap gigitan!</p>
-            <br><a href="#" onclick="showSection('products')" class="btn">Lihat Daftar Kue</a>
+            <br><a href="#products" onclick="showSection('products'); return false;" class="btn">Lihat Daftar Kue</a>
         </div>
         <h2 style="text-align:center;margin-bottom:2rem;color:var(--dark)">Kue Terlaris Kami</h2>
         <div id="featured-products" class="product-grid"></div>
@@ -183,19 +183,27 @@ window.uploadImage = async function(file){
   }
 };
 
-/* ---------- Initial ---------- */
-function initializeData(){
-  const savedProducts = localStorage.getItem('products');
-  const savedOrders   = localStorage.getItem('orders');
-  if(savedProducts){ products = JSON.parse(savedProducts); }
-  else {
-    products = [
-      {id:1, name:'Black Forest', price:250000, category:'birthday', description:'Kue cokelat klasik dengan lapisan cream dan cherry segar', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23654321"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3EBlack Forest%3C/text%3E%3C/svg%3E'},
-      {id:2, name:'Red Velvet', price:280000, category:'birthday', description:'Kue lembut dengan rasa cokelat dan cream cheese frosting', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23dc143c"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3ERed Velvet%3C/text%3E%3C/svg%3E'},
-      {id:3, name:'Croissant', price:15000, category:'pastry', description:'Pastry Prancis berlapis dengan tekstur renyah di luar dan lembut di dalam', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23daa520"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3ECroissant%3C/text%3E%3C/svg%3E'}
-    ];
-    saveProducts();
+/* ---------- Initial (baca JSON publik dulu) ---------- */
+async function initializeData(){
+  try {
+    // ambil data publik
+    const res = await fetch('products.json');
+    products = await res.json();
+    localStorage.setItem('products', JSON.stringify(products));
+  } catch {
+    // gagal → pakai localStorage
+    const saved = localStorage.getItem('products');
+    if(saved) products = JSON.parse(saved);
+    else {
+      products = [
+        {id:1, name:'Black Forest', price:250000, category:'birthday', description:'Kue cokelat klasik dengan lapisan cream dan cherry segar', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23654321"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3EBlack Forest%3C/text%3E%3C/svg%3E'},
+        {id:2, name:'Red Velvet', price:280000, category:'birthday', description:'Kue lembut dengan rasa cokelat dan cream cheese frosting', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23dc143c"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3ERed Velvet%3C/text%3E%3C/svg%3E'},
+        {id:3, name:'Croissant', price:15000, category:'pastry', description:'Pastry Prancis berlapis dengan tekstur renyah di luar dan lembut di dalam', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23daa520"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3ECroissant%3C/text%3E%3C/svg%3E'}
+      ];
+      localStorage.setItem('products', JSON.stringify(products));
+    }
   }
+  const savedOrders = localStorage.getItem('orders');
   if(savedOrders) orders = JSON.parse(savedOrders);
 }
 function saveProducts(){ localStorage.setItem('products', JSON.stringify(products)); }
@@ -311,6 +319,7 @@ function editProduct(id){
 function deleteProduct(id){
   if(!confirm('Yakin hapus produk ini?')) return;
   products=products.filter(x=>x.id!==id); saveProducts();
+  updatePublicJSON();          // <-- update file publik
   displayAdminProducts(); alert('Produk dihapus');
 }
 document.getElementById('productForm').addEventListener('submit', function(e){
@@ -329,9 +338,33 @@ document.getElementById('productForm').addEventListener('submit', function(e){
     };
     products.push(newP);
   }
-  saveProducts(); displayAdminProducts(); hideAddProductForm();
-  alert('Produk tersimpan'); window.tempProductImage=null;
+  saveProducts();
+  updatePublicJSON();          // <-- update file publik
+  displayAdminProducts();
+  hideAddProductForm();
+  alert('Produk tersimpan\n\nUpload products.json ke GitHub agar user lain melihat update.');
+  window.tempProductImage=null;
 });
+
+/* ---------- Upload JSON publik ---------- */
+function updatePublicJSON(){
+  const blob = new Blob([JSON.stringify(products, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'products.json';
+  a.click();
+}
+
+/* ---------- File input handler ---------- */
+document.getElementById('productImage').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file || !file.type.startsWith('image/')){ alert('Pilih file gambar!'); return; }
+  const url = await uploadImage(file);
+  if(url){ window.tempProductImage = url; alert('Upload selesai. URL: '+url); }
+  else{ alert('Gagal upload gambar'); }
+});
+
+/* ---------- Orders ---------- */
 function showOrders(){
   document.getElementById('orders-list').style.display='block';
   document.getElementById('add-product-form').style.display='none';
@@ -358,18 +391,12 @@ function updateOrderStatus(id,status){
   const o=orders.find(x=>x.id===id); if(o){o.status=status; saveOrders();}
 }
 
-/* ---------- File input handler (auto upload) ---------- */
-document.getElementById('productImage').addEventListener('change', async (e)=>{
-  const file = e.target.files[0];
-  if(!file || !file.type.startsWith('image/')){ alert('Pilih file gambar!'); return; }
-  const url = await uploadImage(file);
-  if(url){ window.tempProductImage = url; alert('Upload selesai. URL: '+url); }
-  else{ alert('Gagal upload gambar'); }
-});
-
 /* ---------- Search / Filter ---------- */
 document.getElementById('searchInput').addEventListener('input',()=>displayProducts());
 document.getElementById('categoryFilter').addEventListener('change',()=>displayProducts());
+
+/* ---------- Hash router ---------- */
+if(location.hash==='#products') showSection('products');
 
 /* ---------- Init ---------- */
 initializeData();
