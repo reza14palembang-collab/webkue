@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Kue Online - Sweet Delights</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #e91e63;
+            --secondary: #f8bbd0;
+            --accent: #ff80ab;
+            --light: #fff0f5;
+            --dark: #880e4f;
+            --text: #5d4037;
+            --glass: rgba(255, 255, 255, 0.85);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light) 0%, #f9f4f7 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-menu a:hover {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--light) 100%);
+            border-radius: 24px;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: var(--glass);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.8rem;
+        }
+
+        .product-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-description {
+            color: #795548;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 2.5rem;
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.8rem;
+            border: 2px solid var(--secondary);
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: var(--glass);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.2);
+        }
+
+        /* Order Form */
+        .order-form {
+            background: var(--glass);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            margin: 0 auto;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.2);
+        }
+
+        /* Admin Panel */
+        .admin-login {
+            background: var(--glass);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            max-width: 500px;
+            margin: 2rem auto;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .admin-panel {
+            background: var(--glass);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .order-list {
+            margin-top: 1.5rem;
+        }
+
+        .order-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .order-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1.2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.8rem;
+            }
+            
+            .hero {
+                padding: 3.5rem 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Hidden sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🧁 Sweet Delights</div>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('products')">Daftar Kue</a></li>
+                <li><a href="#" onclick="showSection('order')">Pesan</a></li>
+                <li><a href="#" onclick="showSection('admin')">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <div id="home" class="section active">
+        <div class="container">
+            <div class="hero fade-in">
+                <h1>Selamat Datang di Sweet Delights</h1>
+                <p>Nikmati kelezatan kue homemade dengan bahan berkualitas terbaik. Pesan sekarang dan rasakan kebahagiaan dalam setiap gigitan!</p>
+                <br>
+                <a href="#" onclick="showSection('products')" class="btn">Lihat Daftar Kue</a>
+            </div>
+            
+            <h2 style="text-align: center; margin-bottom: 2rem; color: var(--dark);">Kue Terlaris Kami</h2>
+            <div id="featured-products" class="product-grid">
+                <!-- Produk unggulan akan dimuat di sini -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <div id="products" class="section">
+        <div class="container">
+            <h1 style="text-align: center; margin-bottom: 2rem; color: var(--dark);">Daftar Kue</h1>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Cari kue...">
+                <select class="search-input" id="categoryFilter" style="width: 200px;">
+                    <option value="">Semua Kategori</option>
+                    <option value="birthday">Kue Ulang Tahun</option>
+                    <option value="wedding">Kue Pernikahan</option>
+                    <option value="pastry">Pastry</option>
+                </select>
+            </div>
+            
+            <div id="product-list" class="product-grid">
+                <!-- Daftar produk akan dimuat di sini -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Section -->
+    <div id="order" class="section">
+        <div class="container">
+            <h1 style="text-align: center; margin-bottom: 2rem; color: var(--dark);">Pemesanan Kue</h1>
+            
+            <div class="order-form fade-in">
+                <h2 id="selected-cake" style="margin-bottom: 1.5rem; color: var(--primary);">Pilih kue terlebih dahulu</h2>
+                
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label for="customerName">Nama Lengkap</label>
+                        <input type="text" id="customerName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerPhone">Nomor WhatsApp</label>
+                        <input type="tel" id="customerPhone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerAddress">Alamat Pengiriman</label>
+                        <textarea id="customerAddress" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cakeSize">Ukuran Kue</label>
+                        <select id="cakeSize" required>
+                            <option value="">Pilih Ukuran</option>
+                            <option value="small">Kecil (6 inch)</option>
+                            <option value="medium">Sedang (8 inch)</option>
+                            <option value="large">Besar (10 inch)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="orderNotes">Catatan Pesanan (opsional)</label>
+                        <textarea id="orderNotes" rows="2" placeholder="Contoh: Tambahkan tulisan 'Selamat Ulang Tahun'"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Kirim Pesanan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Section -->
+    <div id="admin" class="section">
+        <div class="container">
+            <div id="admin-login" class="admin-login">
+                <h2>Login Admin</h2>
+                <form id="loginForm" style="margin-top: 1.5rem;">
+                    <div class="form-group">
+                        <input type="password" id="adminPassword" placeholder="Masukkan password admin" required>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Login</button>
+                </form>
+            </div>
+            
+            <div id="admin-panel" class="admin-panel" style="display: none;">
+                <h2>Dashboard Admin</h2>
+                
+                <div style="margin: 2rem 0;">
+                    <button class="btn" onclick="showAddProductForm()">Tambah Produk Baru</button>
+                    <button class="btn" onclick="showOrders()" style="margin-left: 1rem;">Lihat Pesanan</button>
+                </div>
+                
+                <div id="product-management">
+                    <h3>Kelola Produk</h3>
+                    <div id="admin-product-list" class="product-grid">
+                        <!-- Daftar produk untuk admin akan dimuat di sini -->
+                    </div>
+                </div>
+                
+                <div id="add-product-form" style="display: none; margin-top: 2rem;">
+                    <h3>Tambah/Edit Produk</h3>
+                    <form id="productForm">
+                        <div class="form-group">
+                            <label>Nama Kue</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Harga</label>
+                            <input type="number" id="productPrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <select id="productCategory">
+                                <option value="birthday">Kue Ulang Tahun</option>
+                                <option value="wedding">Kue Pernikahan</option>
+                                <option value="pastry">Pastry</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea id="productDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Gambar Kue</label>
+                            <input type="file" id="productImage" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn">Simpan Produk</button>
+                        <button type="button" class="btn" onclick="hideAddProductForm()" style="background: #666; margin-left: 1rem;">Batal</button>
+                    </form>
+                </div>
+                
+                <div id="orders-list" style="display: none; margin-top: 2rem;">
+                    <h3>Daftar Pesanan</h3>
+                    <div id="order-list-container" class="order-list">
+                        <!-- Daftar pesanan akan dimuat di sini -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data produk - akan disimpan di localStorage sebagai JSON
+        let products = [];
+        let orders = [];
+        let selectedProduct = null;
+        let editingProduct = null;
+
+        // Inisialisasi data awal
+        function initializeData() {
+            const savedProducts = localStorage.getItem('products');
+            const savedOrders = localStorage.getItem('orders');
+            
+            if (savedProducts) {
+                products = JSON.parse(savedProducts);
+            } else {
+                // Data awal jika belum ada
+                products = [
+                    {
+                        id: 1,
+                        name: "Black Forest",
+                        price: 250000,
+                        category: "birthday",
+                        description: "Kue cokelat klasik dengan lapisan cream dan cherry segar",
+                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23654321'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20'%3EBlack Forest%3C/text%3E%3C/svg%3E"
+                    },
+                    {
+                        id: 2,
+                        name: "Red Velvet",
+                        price: 280000,
+                        category: "birthday",
+                        description: "Kue lembut dengan rasa cokelat dan cream cheese frosting",
+                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23dc143c'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20'%3ERed Velvet%3C/text%3E%3C/svg%3E"
+                    },
+                    {
+                        id: 3,
+                        name: "Croissant",
+                        price: 15000,
+                        category: "pastry",
+                        description: "Pastry Prancis berlapis dengan tekstur renyah di luar dan lembut di dalam",
+                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23daa520'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20'%3ECroissant%3C/text%3E%3C/svg%3E"
+                    }
+                ];
+                saveProducts();
+            }
+            
+            if (savedOrders) {
+                orders = JSON.parse(savedOrders);
+            }
+        }
+
+        // Simpan produk ke localStorage
+        function saveProducts() {
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+
+        // Simpan pesanan ke localStorage
+        function saveOrders() {
+            localStorage.setItem('orders', JSON.stringify(orders));
+        }
+
+        // Tampilkan section yang dipilih
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            
+            if (sectionId === 'products') {
+                displayProducts();
+            } else if (sectionId === 'home') {
+                displayFeaturedProducts();
+            }
+        }
+
+        // Tampilkan produk unggulan di home
+        function displayFeaturedProducts() {
+            const container = document.getElementById('featured-products');
+            const featuredProducts = products.slice(0, 3);
+            
+            container.innerHTML = featuredProducts.map(product => `
+                <div class="product-card fade-in" onclick="selectProduct(${product.id})">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-price">Rp ${product.price.toLocaleString()}</p>
+                        <p class="product-description">${product.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Tampilkan semua produk
+        function displayProducts(filter = '') {
+            const container = document.getElementById('product-list');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            
+            let filteredProducts = products;
+            
+            if (searchTerm) {
+                filteredProducts = filteredProducts.filter(p => 
+                    p.name.toLowerCase().includes(searchTerm) || 
+                    p.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (categoryFilter) {
+                filteredProducts = filteredProducts.filter(p => p.category === categoryFilter);
+            }
+            
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="product-card fade-in" onclick="selectProduct(${product.id})">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-price">Rp ${product.price.toLocaleString()}</p>
+                        <p class="product-description">${product.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Pilih produk untuk dipesan
+        function selectProduct(productId) {
+            selectedProduct = products.find(p => p.id === productId);
+            document.getElementById('selected-cake').textContent = `Pesanan: ${selectedProduct.name}`;
+            showSection('order');
+        }
+
+        // Form pemesanan
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!selectedProduct) {
+                alert('Silakan pilih kue terlebih dahulu');
+                return;
+            }
+            
+            const order = {
+                id: Date.now(),
+                product: selectedProduct,
+                customerName: document.getElementById('customerName').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                customerAddress: document.getElementById('customerAddress').value,
+                cakeSize: document.getElementById('cakeSize').value,
+                orderNotes: document.getElementById('orderNotes').value,
+                status: 'pending',
+                orderDate: new Date().toLocaleString('id-ID')
+            };
+            
+            orders.push(order);
+            saveOrders();
+            
+            // Kirim notifikasi WhatsApp (simulasi)
+            const message = `Halo Sweet Delights! Saya ingin memesan ${selectedProduct.name} (${order.cakeSize}). Nama: ${order.customerName}, Alamat: ${order.customerAddress}`;
+            const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+            
+            alert('Pesanan berhasil dikirim! Anda akan diarahkan ke WhatsApp untuk konfirmasi.');
+            window.open(whatsappUrl, '_blank');
+            
+            // Reset form
+            this.reset();
+            selectedProduct = null;
+            document.getElementById('selected-cake').textContent = 'Pilih kue terlebih dahulu';
+        });
+
+        // Login admin
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            
+            // Password admin sederhana (bisa diganti)
+            if (password === 'admin123') {
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                displayAdminProducts();
+            } else {
+                alert('Password salah!');
+            }
+        });
+
+        // Tampilkan produk di admin
+        function displayAdminProducts() {
+            const container = document.getElementById('admin-product-list');
+            container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-price">Rp ${product.price.toLocaleString()}</p>
+                        <p class="product-description">${product.description}</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn" onclick="editProduct(${product.id})">Edit</button>
+                            <button class="btn" onclick="deleteProduct(${product.id})" style="background: #dc3545; margin-left: 0.5rem;">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Tambah produk baru
+        function showAddProductForm() {
+            document.getElementById('add-product-form').style.display = 'block';
+            document.getElementById('orders-list').style.display = 'none';
+            document.getElementById('productForm').reset();
+            editingProduct = null;
+        }
+
+        // Sembunyikan form tambah produk
+        function hideAddProductForm() {
+            document.getElementById('add-product-form').style.display = 'none';
+        }
+
+        // Edit produk
+        function editProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            editingProduct = product;
+            
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productCategory').value = product.category;
+            document.getElementById('productDescription').value = product.description;
+            
+            showAddProductForm();
+        }
+
+        // Hapus produk
+        function deleteProduct(productId) {
+            if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
+                products = products.filter(p => p.id !== productId);
+                saveProducts();
+                displayAdminProducts();
+                alert('Produk berhasil dihapus');
+            }
+        }
+
+        // Form produk admin
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('productName').value;
+            const price = parseInt(document.getElementById('productPrice').value);
+            const category = document.getElementById('productCategory').value;
+            const description = document.getElementById('productDescription').value;
+            const imageFile = document.getElementById('productImage').files[0];
+            
+            if (editingProduct) {
+                // Update produk existing
+                editingProduct.name = name;
+                editingProduct.price = price;
+                editingProduct.category = category;
+                editingProduct.description = description;
+            } else {
+                // Tambah produk baru
+                const newProduct = {
+                    id: Date.now(),
+                    name: name,
+                    price: price,
+                    category: category,
+                    description: description,
+                    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23" + Math.floor(Math.random()*16777215).toString(16) + "'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20'%3E" + name + "%3C/text%3E%3C/svg%3E"
+                };
+                products.push(newProduct);
+            }
+            
+            saveProducts();
+            displayAdminProducts();
+            hideAddProductForm();
+            alert('Produk berhasil disimpan');
+        });
+
+        // Tampilkan pesanan
+        function showOrders() {
+            document.getElementById('orders-list').style.display = 'block';
+            document.getElementById('add-product-form').style.display = 'none';
+            
+            const container = document.getElementById('order-list-container');
+            
+            if (orders.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999;">Belum ada pesanan</p>';
+                return;
+            }
+            
+            container.innerHTML = orders.map(order => `
+                <div class="order-item">
+                    <h4>${order.product.name} - ${order.customerName}</h4>
+                    <p><strong>Telepon:</strong> ${order.customerPhone}</p>
+                    <p><strong>Alamat:</strong> ${order.customerAddress}</p>
+                    <p><strong>Ukuran:</strong> ${order.cakeSize}</p>
+                    <p><strong>Catatan:</strong> ${order.orderNotes || '-'}</p>
+                    <p><strong>Tanggal:</strong> ${order.orderDate}</p>
+                    <p><strong>Status:</strong> 
+                        <select onchange="updateOrderStatus(${order.id}, this.value)">
+                            <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Diproses</option>
+                            <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Selesai</option>
+                        </select>
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        // Update status pesanan
+        function updateOrderStatus(orderId, status) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = status;
+                saveOrders();
+            }
+        }
+
+        // Search dan filter
+        document.getElementById('searchInput').addEventListener('input', () => displayProducts());
+        document.getElementById('categoryFilter').addEventListener('change', () => displayProducts());
+
+        // Inisialisasi aplikasi
+        initializeData();
+        displayFeaturedProducts();
+    </script>
+</body>
+</html>
