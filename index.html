@@ -103,7 +103,7 @@
         <div class="logo">
             <img id="logoImg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Crect width='120' height='40' fill='%23e91e63' rx='8'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3ESweet Delights%3C/text%3E%3C/svg%3E" alt="Logo">
             <input type="file" id="logoUpload" accept="image/*" onchange="changeLogo()">
-            <button class="admin-edit-btn" id="editLogoBtn" onclick="document.getElementById('logoUpload').click()" style="display:none;">Edit</button>
+            <!-- Tombol edit logo (akan dibuat dinamis setelah login) -->
         </div>
         <ul class="nav-menu">
             <li><a href="#home"   onclick="showSection('home');   return false;">Home</a></li>
@@ -121,7 +121,7 @@
         <!-- SLIDESHOW HERO BISA DI-EDIT ADMIN -->
         <div class="slideshow" id="heroSlideshow"></div>
         <input type="file" id="slideUpload" accept="image/*" multiple onchange="changeSlides()" style="display:none;">
-        <button class="admin-edit-btn" id="editSlideBtn" onclick="document.getElementById('slideUpload').click()" style="display:none;margin:0 auto 1rem;display:block;">Edit Slide Hero</button>
+        <!-- Tombol edit slide (akan dibuat dinamis setelah login) -->
 
         <div class="hero fade-in">
             <h1>Selamat Datang di Sweet Delights</h1>
@@ -352,10 +352,23 @@ function toggleDark(){
   document.getElementById('themeToggle').textContent = current==='dark'?'🌙':'☀️';
 }
 
-/* ---------- ADMIN EDIT LOGO & SLIDE HERO (HANYA MUNCUL SAAT ADMIN LOGIN) ---------- */
+/* ---------- ADMIN EDIT LOGO & SLIDE HERO (TOMBOL DIBUAT DINAMIS SETELAH LOGIN) ---------- */
 function showAdminControls(){
-  document.getElementById('editLogoBtn').style.display='inline-block';
-  document.getElementById('editSlideBtn').style.display='block';
+  // Tombol edit logo
+  const logoBtn = document.createElement('button');
+  logoBtn.className = 'admin-edit-btn';
+  logoBtn.textContent = 'Edit';
+  logoBtn.onclick = ()=> document.getElementById('logoUpload').click();
+  document.querySelector('.logo').appendChild(logoBtn);
+
+  // Tombol edit slide hero
+  const slideBtn = document.createElement('button');
+  slideBtn.className = 'admin-edit-btn';
+  slideBtn.textContent = 'Edit Slide Hero';
+  slideBtn.onclick = ()=> document.getElementById('slideUpload').click();
+  slideBtn.style.margin = '0 auto 1rem';
+  slideBtn.style.display = 'block';
+  document.querySelector('#home .container').insertBefore(slideBtn, document.querySelector('#home .hero'));
 }
 function changeLogo(){
   const file = document.getElementById('logoUpload').files[0];
