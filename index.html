@@ -5,18 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toko Kue Online - Sweet Delights</title>
     <style>
+        /* ===== ROOT & DARK MODE ===== */
         :root {
             --primary: #e91e63; --secondary: #f8bbd0; --accent: #ff80ab;
             --light: #fff0f5; --dark: #880e4f; --text: #5d4037;
             --glass: rgba(255,255,255,.85); --shadow: 0 8px 32px rgba(0,0,0,.1);
+            --radius: 20px; --trans: .4s;
+        }
+        [data-theme="dark"] {
+            --primary: #ff80ab; --secondary: #5d4037; --accent: #f48fb1;
+            --light: #121212; --dark: #fce4ec; --text: #f8bbd0;
+            --glass: rgba(30,30,30,.85); --shadow: 0 8px 32px rgba(0,0,0,.4);
         }
         *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:Segoe UI,Roboto,Helvetica,Arial;font-size:1rem;color:var(--text);background:linear-gradient(135deg,var(--light) 0%,#f9f4f7 100%);min-height:100vh;}
+        body{font-family:Segoe UI,Roboto,Helvetica,Arial;font-size:1rem;color:var(--text);background:var(--light);min-height:100vh;transition:background var(--trans);}
         nav{background:var(--glass);backdrop-filter:blur(10px);box-shadow:var(--shadow);position:sticky;top:0;z-index:1000;}
         .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;}
         .logo{font-size:1.8rem;font-weight:800;background:linear-gradient(45deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;}
         .nav-menu{display:flex;list-style:none;gap:2rem;}
-        .nav-menu a{text-decoration:none;color:var(--text);font-weight:600;padding:.5rem 1rem;border-radius:20px;transition:.3s;}
+        .nav-menu a{text-decoration:none;color:var(--text);font-weight:600;padding:.5rem 1rem;border-radius:30px;transition:.3s;}
         .nav-menu a:hover{background:var(--secondary);color:var(--primary);}
         .container{max-width:1200px;margin:0 auto;padding:2rem;}
         .hero{text-align:center;padding:5rem 0;background:linear-gradient(135deg,var(--secondary) 0%,var(--light) 100%);border-radius:24px;margin-bottom:3rem;position:relative;overflow:hidden;}
@@ -48,6 +55,79 @@
         .order-item{background:rgba(255,255,255,.7);padding:1.5rem;border-radius:16px;margin-bottom:1.2rem;box-shadow:0 4px 10px rgba(0,0,0,.05);border-left:4px solid var(--primary);}
         @media(max-width:768px){.nav-container{flex-direction:column;gap:1rem}.hero h1{font-size:2.5rem}.product-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.8rem}}
         .section{display:none}.section.active{display:block}
+
+        /* ===== DARK MODE TOGGLE ===== */
+        #themeToggle{position:fixed;bottom:2rem;right:2rem;width:3rem;height:3rem;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;box-shadow:var(--shadow);z-index:999;transition:.3s;}
+        #themeToggle:hover{transform:scale(1.1);}
+
+        /* ===== SLIDESHOW HERO ===== */
+        .slideshow{position:relative;width:100%;height:320px;border-radius:24px;overflow:hidden;margin-bottom:2rem;}
+        .slide{position:absolute;width:100%;height:100%;opacity:0;transition:opacity 1s;}
+        .slide.active{opacity:1;}
+        .slide img{width:100%;height:100%;object-fit:cover;}
+        .slide-text{position:absolute;bottom:2rem;left:2rem;background:rgba(0,0,0,.5);color:#fff;padding:1rem 1.5rem;border-radius:12px;}
+        .slide-text h3{font-size:1.5rem;margin-bottom:.5rem;}
+        .slide-text p{font-size:1rem;}
+
+        /* ===== POPUP DETAIL / WISHLIST ===== */
+        .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:2000;}
+        .popup-content{background:var(--glass);border-radius:24px;padding:2rem;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;backdrop-filter:blur(10px);box-shadow:var(--shadow);}
+        .popup-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+        .popup-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--primary);}
+        .popup-body img{width:100%;border-radius:12px;margin-bottom:1rem;}
+        .popup-body h3{margin-bottom:.5rem;}
+        .popup-body p{margin-bottom:1rem;}
+        .popup-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+
+        /* ===== WISHLIST HEART ===== */
+        .heart-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:#ccc;transition:color .3s;}
+        .heart-btn.active{color:var(--primary);}
+
+        /* ===== RECOMMENDATION ===== */
+        .recommendation{margin-top:3rem;}
+        .recommendation h3{margin-bottom:1rem;text-align:center;}
+
+        /* ===== CUSTOM PREVIEW ===== */
+        .custom-preview{background:var(--glass);border-radius:16px;padding:1.5rem;margin-top:1rem;backdrop-filter:blur(5px);}
+        .color-picker{display:flex;gap:1rem;margin-bottom:1rem;}
+        .color-picker input{width:3rem;height:3rem;border:none;border-radius:50%;cursor:pointer;}
+        .preview-cake{width:120px;height:120px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#fff;text-align:center;}
+
+        /* ===== PRICE CALCULATOR ===== */
+        .price-calc{background:var(--glass);border-radius:16px;padding:1.5rem;margin-top:1rem;backdrop-filter:blur(5px);}
+        .price-calc h4{margin-bottom:1rem;}
+        .calc-row{display:flex;justify-content:space-between;margin-bottom:.5rem;}
+        .calc-total{font-weight:bold;font-size:1.2rem;color:var(--primary);}
+
+        /* ===== NOTIF ADMIN ===== */
+        #adminNotif{position:fixed;top:1rem;right:1rem;background:var(--primary);color:#fff;padding:1rem 1.5rem;border-radius:12px;box-shadow:var(--shadow);display:none;z-index:3000;animation:notifPop .5s;}
+        @keyframes notifPop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+
+        /* ===== TESTIMONI ===== */
+        .testimoni-section{margin-top:3rem;}
+        .testimoni-card{background:var(--glass);padding:1.5rem;border-radius:16px;margin-bottom:1rem;backdrop-filter:blur(5px);}
+        .stars{color:gold;}
+        .testi-text{margin-top:.5rem;font-style:italic;}
+
+        /* ===== OFFLINE MODE ===== */
+        .offline-banner{background:#ff9800;color:#fff;text-align:center;padding:.5rem;position:fixed;top:0;left:0;width:100%;z-index:4000;display:none;}
+
+        /* ===== BUNDLING ===== */
+        .bundle-card{background:var(--glass);border-radius:16px;padding:1.5rem;margin-bottom:1rem;backdrop-filter:blur(5px);}
+        .bundle-save{color:var(--primary);font-weight:bold;}
+
+        /* ===== COMPARE ===== */
+        .compare-container{display:flex;gap:1rem;flex-wrap:wrap;}
+        .compare-card{background:var(--glass);border-radius:16px;padding:1rem;width:45%;min-width:250px;backdrop-filter:blur(5px);}
+        .compare-card img{width:100%;border-radius:12px;margin-bottom:1rem;}
+
+        /* ===== SALAM & UKURAN POPUP ===== */
+        .salam-box{background:var(--glass);border-radius:16px;padding:1rem;margin-bottom:1rem;backdrop-filter:blur(5px);}
+        .size-popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:2500;}
+        .size-popup{background:var(--glass);border-radius:24px;padding:2rem;max-width:400px;width:90%;backdrop-filter:blur(10px);box-shadow:var(--shadow);}
+        .size-option{display:block;width:100%;margin:.5rem 0;padding:1rem;border:2px solid var(--secondary);border-radius:12px;background:transparent;cursor:pointer;transition:.3s;}
+        .size-option:hover{border-color:var(--primary);}
+        .size-price{font-weight:bold;color:var(--primary);}
     </style>
 </head>
 <body>
@@ -64,8 +144,11 @@
     </div>
 </nav>
 
+<button id="themeToggle" onclick="toggleDark()" title="Dark Mode">🌙</button>
+
 <div id="home" class="section active">
     <div class="container">
+        <div class="slideshow" id="heroSlideshow"></div>
         <div class="hero fade-in">
             <h1>Selamat Datang di Sweet Delights</h1>
             <p>Nikmati kelezatan kue homemade dengan bahan berkualitas terbaik. Pesan sekarang dan rasakan kebahagiaan dalam setiap gigitan!</p>
@@ -89,6 +172,7 @@
             </select>
         </div>
         <div id="product-list" class="product-grid"></div>
+        <div class="recommendation" id="recommendation"></div>
     </div>
 </div>
 
@@ -101,15 +185,50 @@
                 <div class="form-group"><label>Nama Lengkap</label><input type="text" id="customerName" required></div>
                 <div class="form-group"><label>Nomor WhatsApp</label><input type="tel" id="customerPhone" required></div>
                 <div class="form-group"><label>Alamat Pengiriman</label><textarea id="customerAddress" rows="3" required></textarea></div>
-                <div class="form-group"><label>Ukuran Kue</label>
-                    <select id="cakeSize" required>
+
+                <!-- Kalkulator harga otomatis -->
+                <div class="form-group"><label>Ukuran & Harga</label>
+                    <select id="cakeSize" required onchange="calculatePrice()">
                         <option value="">Pilih Ukuran</option>
-                        <option value="small">Kecil (6 inch)</option>
-                        <option value="medium">Sedang (8 inch)</option>
-                        <option value="large">Besar (10 inch)</option>
+                        <option value="bento" data-price="32500">Bento Cake (± Rp 32.500)</option>
+                        <option value="16cm" data-price="45000">16 cm (± Rp 45.000)</option>
+                        <option value="18cm" data-price="67500">18 cm (± Rp 67.500)</option>
+                        <option value="20cm" data-price="90000">20 cm (± Rp 90.000)</option>
+                        <option value="22cm" data-price="150000">22 cm (± Rp 150.000)</option>
                     </select>
                 </div>
+
+                <!-- Preview kustom -->
+                <div class="custom-preview">
+                    <h4>Live Preview Kustom</h4>
+                    <div class="color-picker">
+                        <label>Warna Topping:</label>
+                        <input type="color" id="toppingColor" value="#e91e63" onchange="updatePreview()">
+                    </div>
+                    <div class="color-picker">
+                        <label>Ucapan di Kue:</label>
+                        <input type="text" id="cakeMessage" placeholder="Contoh: Selamat Ulang Tahun" oninput="updatePreview()">
+                    </div>
+                    <div class="preview-cake" id="previewCake" style="background:#e91e63">Preview</div>
+                </div>
+
+                <!-- Kalkulator total -->
+                <div class="price-calc" id="priceCalc" style="display:none;">
+                    <h4>Perkiraan Harga</h4>
+                    <div class="calc-row"><span>Ukuran:</span><span id="calcSize">-</span></div>
+                    <div class="calc-row"><span>Base:</span><span id="calcBase">-</span></div>
+                    <div class="calc-row"><span>Custom:</span><span id="calcCustom">+ Rp 5.000</span></div>
+                    <div class="calc-total"><span>Total:</span><span id="calcTotal">-</span></div>
+                </div>
+
                 <div class="form-group"><label>Catatan Pesanan (opsional)</label><textarea id="orderNotes" rows="2"></textarea></div>
+
+                <!-- Salam otomatis -->
+                <div class="salam-box">
+                    <p><strong>Assalamu'alaikum wr.wb</strong></p>
+                    <p>Berikut detail pesanan saya:</p>
+                </div>
+
                 <button type="submit" class="btn" style="width:100%">Kirim Pesanan</button>
             </form>
         </div>
@@ -161,9 +280,49 @@
     </div>
 </div>
 
+<!-- Pop-up detail produk -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+        <div class="popup-header">
+            <h3 id="popupTitle">Detail Kue</h3>
+            <button class="popup-close" onclick="closePopup()">&times;</button>
+        </div>
+        <div class="popup-body">
+            <img id="popupImg" src="" alt="">
+            <p id="popupDesc"></p>
+            <div id="popupExtra"></div>
+            <div class="popup-actions">
+                <button class="btn" onclick="addToWishlist()">❤️ Wishlist</button>
+                <button class="btn" onclick="selectFromPopup()">Pesan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pop-up pemilihan ukuran -->
+<div class="size-popup-overlay" id="sizePopupOverlay">
+    <div class="size-popup">
+        <h3>Pilih Ukuran & Harga</h3>
+        <div id="sizeOptions"></div>
+        <button class="btn" onclick="closeSizePopup()" style="margin-top:1rem;width:100%">Batal</button>
+    </div>
+</div>
+
+<!-- Notifikasi admin -->
+<div id="adminNotif">Pesanan Baru! 🎉</div>
+
+<!-- Offline banner -->
+<div class="offline-banner" id="offlineBanner">Anda offline – beberapa fitur terbatas.</div>
+
+<!-- Chat WhatsApp floating -->
+<a href="https://wa.me/6281234567890?text=Halo%20Sweet%20Delights!" id="waChat" target="_blank" title="Chat Admin" style="position:fixed;bottom:5.5rem;right:2rem;background:#25D366;color:#fff;width:3.5rem;height:3.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);z-index:999;font-size:1.5rem;transition:.3s;">💬</a>
+
 <script>
 /* ---------- Data ---------- */
 let products = [], orders = [], selectedProduct = null, editingProduct = null;
+let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+let testimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+let offlineMode = false;
 
 /* ---------- Cloudinary ---------- */
 const CLOUD_NAME    = 'dgacmoky3';
@@ -183,22 +342,20 @@ window.uploadImage = async function(file){
   }
 };
 
-/* ---------- Initial (baca JSON publik dulu) ---------- */
+/* ---------- Initial (baca JSON publik) ---------- */
 async function initializeData(){
   try {
-    // ambil data publik
     const res = await fetch('products.json');
     products = await res.json();
     localStorage.setItem('products', JSON.stringify(products));
   } catch {
-    // gagal → pakai localStorage
     const saved = localStorage.getItem('products');
     if(saved) products = JSON.parse(saved);
     else {
       products = [
-        {id:1, name:'Black Forest', price:250000, category:'birthday', description:'Kue cokelat klasik dengan lapisan cream dan cherry segar', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23654321"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3EBlack Forest%3C/text%3E%3C/svg%3E'},
-        {id:2, name:'Red Velvet', price:280000, category:'birthday', description:'Kue lembut dengan rasa cokelat dan cream cheese frosting', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23dc143c"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3ERed Velvet%3C/text%3E%3C/svg%3E'},
-        {id:3, name:'Croissant', price:15000, category:'pastry', description:'Pastry Prancis berlapis dengan tekstur renyah di luar dan lembut di dalam', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23daa520"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3ECroissant%3C/text%3E%3C/svg%3E'}
+        {id:1, name:'Black Forest', price:250000, category:'birthday', description:'Kue cokelat klasik dengan lapisan cream dan cherry segar', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23654321"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3EBlack Forest%3C/text%3E%3C/svg%3E', rating:4.5, stock:5, extraImages:[]},
+        {id:2, name:'Red Velvet', price:280000, category:'birthday', description:'Kue lembut dengan rasa cokelat dan cream cheese frosting', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23dc143c"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3ERed Velvet%3C/text%3E%3C/svg%3E', rating:4.7, stock:3, extraImages:[]},
+        {id:3, name:'Croissant', price:15000, category:'pastry', description:'Pastry Prancis berlapis dengan tekstur renyah di luar dan lembut di dalam', image:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200"%3E%3Crect width="300" height="200" fill="%23daa520"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="20"%3ECroissant%3C/text%3E%3C/svg%3E', rating:4.3, stock:10, extraImages:[]}
       ];
       localStorage.setItem('products', JSON.stringify(products));
     }
@@ -211,69 +368,185 @@ function saveOrders  (){ localStorage.setItem('orders',   JSON.stringify(orders)
 function showSection(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id==='products') displayProducts();
-  if(id==='home') displayFeaturedProducts();
+  if(id==='products') {displayProducts(); displayRecommendation();}
+  if(id==='home') {displayFeaturedProducts(); initSlideshow();}
+  if(id==='admin') displayAdminProducts();
+}
+
+/* ---------- DARK MODE ---------- */
+function toggleDark(){
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current==='dark'?'light':'dark');
+  document.getElementById('themeToggle').textContent = current==='dark'?'🌙':'☀️';
+}
+
+/* ---------- SLIDESHOW ---------- */
+const slideshowData = [
+  {img:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="320"%3E%3Crect width="800" height="320" fill="%23e91e63"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="40"%3EPromo Spesial 🎉%3C/text%3E%3C/svg%3E',title:'Promo Spesial',desc:'Diskon 20 % hari ini!'},
+  {img:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="320"%3E%3Crect width="800" height="320" fill="%23f8bbd0"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23880e4f" font-size="40"%3EKue Ulang Tahun%3C/text%3E%3C/svg%3E',title:'Kue Ulang Tahun',desc:'Pesan sekarang, gratis topper!'},
+  {img:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="320"%3E%3Crect width="800" height="320" fill="%235d4037"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="white" font-size="40"%3EPastry Premium%3C/text%3E%3C/svg%3E',title:'Pastry Premium',desc:'Rasa authentic, hanya di sini!'}
+];
+function initSlideshow(){
+  const container = document.getElementById('heroSlideshow');
+  container.innerHTML = slideshowData.map((s,i)=>`
+    <div class="slide ${i===0?'active':''}">
+      <img src="${s.img}" alt="">
+      <div class="slide-text">
+        <h3>${s.title}</h3>
+        <p>${s.desc}</p>
+      </div>
+    </div>`).join('');
+  let idx = 0;
+  setInterval(()=>{
+    const slides = container.querySelectorAll('.slide');
+    slides[idx].classList.remove('active');
+    idx = (idx + 1) % slides.length;
+    slides[idx].classList.add('active');
+  }, 4000);
 }
 
 /* ---------- Produk ---------- */
 function displayFeaturedProducts(){
   const container = document.getElementById('featured-products');
-  container.innerHTML = products.slice(0,3).map(p=>`
-    <div class="product-card fade-in" onclick="selectProduct(${p.id})">
-      <img src="${p.image}" alt="${p.name}" class="product-image">
-      <div class="product-info">
-        <h3 class="product-name">${p.name}</h3>
-        <p class="product-price">Rp ${p.price.toLocaleString()}</p>
-        <p class="product-description">${p.description}</p>
-      </div>
-    </div>`).join('');
+  container.innerHTML = products.slice(0,3).map(p=>cardHTML(p)).join('');
 }
-function displayProducts(filter=''){
+function displayProducts(){
   const container = document.getElementById('product-list');
   const searchTerm = document.getElementById('searchInput').value.toLowerCase();
   const cat = document.getElementById('categoryFilter').value;
   let filtered = products;
   if(searchTerm) filtered = filtered.filter(p=> p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm));
   if(cat) filtered = filtered.filter(p=>p.category===cat);
-  container.innerHTML = filtered.map(p=>`
-    <div class="product-card fade-in" onclick="selectProduct(${p.id})">
-      <img src="${p.image}" alt="${p.name}" class="product-image">
+  container.innerHTML = filtered.map(p=>cardHTML(p)).join('');
+}
+function cardHTML(p){
+  const isLow = p.stock <= 2;
+  return `
+    <div class="product-card fade-in">
+      <img src="${p.image}" alt="${p.name}" class="product-image" onclick="showDetail(${p.id})">
       <div class="product-info">
-        <h3 class="product-name">${p.name}</h3>
+        <h3 class="product-name">${p.name} ${isLow?'<span style="color:red;font-size:.8rem;">Hampir habis!</span>':''}</h3>
         <p class="product-price">Rp ${p.price.toLocaleString()}</p>
         <p class="product-description">${p.description}</p>
+        <div style="display:flex;gap:.5rem;margin-top:1rem;">
+          <button class="btn" onclick="selectProduct(${p.id})">Pesan</button>
+          <button class="heart-btn ${wishlist.includes(p.id)?'active':''}" onclick="toggleWishlist(${p.id})">❤️</button>
+        </div>
       </div>
-    </div>`).join('');
+    </div>`;
 }
+
+/* ---------- Detail / Wishlist ---------- */
+function showDetail(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('popupTitle').textContent = p.name;
+  document.getElementById('popupImg').src = p.image;
+  document.getElementById('popupDesc').textContent = p.description;
+  document.getElementById('popupExtra').innerHTML = `
+    <p><strong>Rating:</strong> ${'★'.repeat(Math.floor(p.rating))} (${p.rating})</p>
+    <p><strong>Stok:</strong> ${p.stock} pcs</p>
+    ${p.extraImages.length?'<p><strong>Foto lain:</strong></p><div style="display:flex;gap:.5rem;">'+p.extraImages.map(im=>`<img src="${im}" style="width:80px;height:60px;object-fit:cover;border-radius:8px;">`).join('')+'</div>':''}
+  `;
+  document.getElementById('popupOverlay').style.display='flex';
+}
+function closePopup(){document.getElementById('popupOverlay').style.display='none';}
+function selectFromPopup(){closePopup(); selectProduct(selectedProduct.id);}
+function toggleWishlist(id){
+  const idx = wishlist.indexOf(id);
+  if(idx>-1) wishlist.splice(idx,1); else wishlist.push(id);
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  displayProducts(); displayFeaturedProducts();
+}
+function displayRecommendation(){
+  const container = document.getElementById('recommendation');
+  if(!selectedProduct) return container.innerHTML='';
+  const rec = products.filter(p=>p.id!==selectedProduct.id && p.category===selectedProduct.category).slice(0,3);
+  if(!rec.length) return;
+  container.innerHTML = `
+    <div class="recommendation">
+      <h3>Rekomendasi Serupa</h3>
+      <div class="product-grid">${rec.map(cardHTML).join('')}</div>
+    </div>`;
+}
+
+/* ---------- Order / Kalkulator / Preview ---------- */
 function selectProduct(id){
   selectedProduct = products.find(p=>p.id===id);
   document.getElementById('selected-cake').textContent = `Pesanan: ${selectedProduct.name}`;
   showSection('order');
+  displayRecommendation();
+}
+function calculatePrice(){
+  const size = document.getElementById('cakeSize');
+  const opt = size.options[size.selectedIndex];
+  if(!opt.value) return document.getElementById('priceCalc').style.display='none';
+  const base = parseInt(opt.dataset.price);
+  const custom = 5000;
+  const total = base + custom;
+  document.getElementById('calcSize').textContent = opt.text;
+  document.getElementById('calcBase').textContent = `Rp ${base.toLocaleString()}`;
+  document.getElementById('calcCustom').textContent = `+ Rp ${custom.toLocaleString()}`;
+  document.getElementById('calcTotal').textContent = `Rp ${total.toLocaleString()}`;
+  document.getElementById('priceCalc').style.display='block';
+}
+function updatePreview(){
+  const color = document.getElementById('toppingColor').value;
+  const msg = document.getElementById('cakeMessage').value || 'Preview';
+  const prev = document.getElementById('previewCake');
+  prev.style.background = color;
+  prev.textContent = msg;
 }
 
-/* ---------- Order ---------- */
+/* ---------- Pop-up Ukuran & Harga Real-time ke WhatsApp ---------- */
 document.getElementById('orderForm').addEventListener('submit', function(e){
   e.preventDefault();
   if(!selectedProduct){alert('Pilih kue terlebih dahulu'); return;}
+  const size = document.getElementById('cakeSize');
+  if(!size.value){alert('Pilih ukuran dulu'); return;}
+  showSizePopup();
+});
+function showSizePopup(){
+  const size = document.getElementById('cakeSize');
+  const opt = size.options[size.selectedIndex];
+  const base = parseInt(opt.dataset.price);
+  const msg = document.getElementById('cakeMessage').value || '-';
+  const color = document.getElementById('toppingColor').value;
+  const total = base + 5000; // custom fee
+  const salam = "Assalamu'alaikum wr.wb";
+  const detail = `
+Nama Kue: ${selectedProduct.name}
+Ukuran: ${opt.text}
+Harga: Rp ${total.toLocaleString()}
+Warna Topping: ${color}
+Ucapan: ${msg}
+Catatan: ${document.getElementById('orderNotes').value}
+  `.trim();
+  const waMsg = `${salam}\n\n${detail}\n\nNama: ${document.getElementById('customerName').value}\nNo WA: ${document.getElementById('customerPhone').value}\nAlamat: ${document.getElementById('customerAddress').value}`;
+  const wa = `https://wa.me/6281234567890?text=${encodeURIComponent(waMsg)}`;
+  window.open(wa,'_blank');
+  // simpan order
   const order = {
     id: Date.now(),
     product: selectedProduct,
     customerName : document.getElementById('customerName').value,
     customerPhone: document.getElementById('customerPhone').value,
     customerAddress: document.getElementById('customerAddress').value,
-    cakeSize: document.getElementById('cakeSize').value,
+    cakeSize: size.value,
+    cakeMessage: msg,
+    toppingColor: color,
     orderNotes: document.getElementById('orderNotes').value,
+    total: total,
     status: 'pending',
     orderDate: new Date().toLocaleString('id-ID')
   };
-  orders.push(order); saveOrders();
-  const msg = `Halo Sweet Delights! Saya ingin memesan ${selectedProduct.name} (${order.cakeSize}). Nama: ${order.customerName}, Alamat: ${order.customerAddress}`;
-  const wa = `https://wa.me/6281234567890?text=${encodeURIComponent(msg)}`;
+  orders.push(order); saveOrders(); notifyAdmin();
   alert('Pesanan berhasil dikirim! Anda akan diarahkan ke WhatsApp.');
-  window.open(wa,'_blank');
   this.reset(); selectedProduct=null;
   document.getElementById('selected-cake').textContent='Pilih kue terlebih dahulu';
-});
+  document.getElementById('priceCalc').style.display='none';
+}
 
 /* ---------- Admin ---------- */
 document.getElementById('loginForm').addEventListener('submit', function(e){
@@ -293,9 +566,10 @@ function displayAdminProducts(){
         <h3 class="product-name">${p.name}</h3>
         <p class="product-price">Rp ${p.price.toLocaleString()}</p>
         <p class="product-description">${p.description}</p>
-        <div style="margin-top:1rem">
+        <p><small>Stok: ${p.stock} | Rating: ${p.rating}</small></p>
+        <div style="margin-top:1rem;">
           <button class="btn" onclick="editProduct(${p.id})">Edit</button>
-          <button class="btn" onclick="deleteProduct(${p.id})" style="background:#dc3545;margin-left:.5rem">Hapus</button>
+          <button class="btn" onclick="deleteProduct(${p.id})" style="background:#dc3545;margin-left:.5rem;">Hapus</button>
         </div>
       </div>
     </div>`).join('');
@@ -319,8 +593,7 @@ function editProduct(id){
 function deleteProduct(id){
   if(!confirm('Yakin hapus produk ini?')) return;
   products=products.filter(x=>x.id!==id); saveProducts();
-  updatePublicJSON();          // <-- update file publik
-  displayAdminProducts(); alert('Produk dihapus');
+  updatePublicJSON(); displayAdminProducts(); alert('Produk dihapus');
 }
 document.getElementById('productForm').addEventListener('submit', function(e){
   e.preventDefault();
@@ -334,26 +607,14 @@ document.getElementById('productForm').addEventListener('submit', function(e){
   } else {
     const newP={
       id: Date.now(), name, price, category:cat, description:desc,
-      image: window.tempProductImage || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23"+Math.floor(Math.random()*16777215).toString(16)+"'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20'%3E"+name+"%3C/text%3E%3C/svg%3E"
+      image: window.tempProductImage || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23"+Math.floor(Math.random()*16777215).toString(16)+"'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20'%3E"+name+"%3C/text%3E%3C/svg%3E",
+      rating:0, stock:10, extraImages:[]
     };
     products.push(newP);
   }
-  saveProducts();
-  updatePublicJSON();          // <-- update file publik
-  displayAdminProducts();
-  hideAddProductForm();
-  alert('Produk tersimpan\n\nUpload products.json ke GitHub agar user lain melihat update.');
-  window.tempProductImage=null;
+  saveProducts(); updatePublicJSON(); displayAdminProducts(); hideAddProductForm();
+  alert('Produk tersimpan\n\nUpload products.json ke GitHub agar user lain melihat update.'); window.tempProductImage=null;
 });
-
-/* ---------- Upload JSON publik ---------- */
-function updatePublicJSON(){
-  const blob = new Blob([JSON.stringify(products, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'products.json';
-  a.click();
-}
 
 /* ---------- File input handler ---------- */
 document.getElementById('productImage').addEventListener('change', async (e)=>{
@@ -364,32 +625,43 @@ document.getElementById('productImage').addEventListener('change', async (e)=>{
   else{ alert('Gagal upload gambar'); }
 });
 
-/* ---------- Orders ---------- */
-function showOrders(){
-  document.getElementById('orders-list').style.display='block';
-  document.getElementById('add-product-form').style.display='none';
-  const container=document.getElementById('order-list-container');
-  if(!orders.length){container.innerHTML='<p style="text-align:center;color:#999">Belum ada pesanan</p>'; return;}
-  container.innerHTML=orders.map(o=>`
-    <div class="order-item">
-      <h4>${o.product.name} - ${o.customerName}</h4>
-      <p><strong>Telepon:</strong> ${o.customerPhone}</p>
-      <p><strong>Alamat:</strong> ${o.customerAddress}</p>
-      <p><strong>Ukuran:</strong> ${o.cakeSize}</p>
-      <p><strong>Catatan:</strong> ${o.orderNotes||'-'}</p>
-      <p><strong>Tanggal:</strong> ${o.orderDate}</p>
-      <p><strong>Status:</strong>
-        <select onchange="updateOrderStatus(${o.id},this.value)">
-          <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
-          <option value="processing" ${o.status==='processing'?'selected':''}>Diproses</option>
-          <option value="completed" ${o.status==='completed'?'selected':''}>Selesai</option>
-        </select>
-      </p>
+/* ---------- Notifikasi admin ---------- */
+function notifyAdmin(){
+  const notif = document.getElementById('adminNotif');
+  notif.style.display='block';
+  setTimeout(()=>notif.style.display='none', 4000);
+  // getar & suara
+  if(navigator.vibrate) navigator.vibrate([200,100,200]);
+  const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDqR4FQpHV8teyQBEHObHh6MOoGAg+lNbz17JAFAeWs+Ho17A...');
+  audio.play().catch(()=>{});
+}
+
+/* ---------- Testimoni ---------- */
+function showTestimoni(){
+  const container = document.getElementById('testimoniList');
+  if(!testimonials.length) return container.innerHTML='<p style="text-align:center;color:#999">Belum ada testimoni</p>';
+  container.innerHTML = testimonials.map(t=>`
+    <div class="testimoni-card">
+      <div class="stars">${'★'.repeat(Math.floor(t.stars))}</div>
+      <div class="testi-text">“${t.text}”</div>
+      <div style="text-align:right;font-size:.9rem;">- ${t.name}</div>
     </div>`).join('');
 }
-function updateOrderStatus(id,status){
-  const o=orders.find(x=>x.id===id); if(o){o.status=status; saveOrders();}
+function addTestimoni(){
+  const name = prompt('Nama Anda:');
+  if(!name) return;
+  const stars = parseInt(prompt('Beri bintang (1-5):'));
+  if(stars<1||stars>5) return alert('Bintang 1-5 saja');
+  const text = prompt('Ulasan Anda:');
+  if(!text) return;
+  testimonials.unshift({name,stars,text,date:new Date().toLocaleString('id-ID')});
+  localStorage.setItem('testimonials', JSON.stringify(testimonials));
+  showTestimoni(); alert('Terima kasih atas ulasannya!');
 }
+
+/* ---------- Offline mode ---------- */
+window.addEventListener('online',  ()=>{offlineMode=false;document.getElementById('offlineBanner').style.display='none';});
+window.addEventListener('offline',()=>{offlineMode=true; document.getElementById('offlineBanner').style.display='block';});
 
 /* ---------- Search / Filter ---------- */
 document.getElementById('searchInput').addEventListener('input',()=>displayProducts());
@@ -401,6 +673,7 @@ if(location.hash==='#products') showSection('products');
 /* ---------- Init ---------- */
 initializeData();
 displayFeaturedProducts();
+initSlideshow();
 </script>
 </body>
 </html>
